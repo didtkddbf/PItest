@@ -30,28 +30,30 @@ if (timing < 20000):
 print ("Timing %d ms" % (timing/1000))
 
 a = 0
-while a>2:
-    a, b = input('act=1,cool=2,stop=3 time(s): ').split()
-    a = int(a)
-    b = int(b)*2
+while a!=3:
+    a= int(input('act=1,cool=2,stop=3 '))
     if a==1:
+        c = int(input('time : '))
+        b = c*2+1
         GPIO.output(Act, GPIO.LOW)
         for count in range(1,b):
             distance = tof.get_distance()
             Rdistance = distance*0.6931 + 16.375
             temp = max(sensor.readPixels())
             if (distance > 0):
-                print ("%d mm, %d cm, %d 'c, %d" % (Rdistance, (distance/10), temp, count))
+                print ("%d mm, %d cm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.5))
             time.sleep(timing/200000.00)
         GPIO.output(Act, GPIO.HIGH)
     elif a==2:
+        c = int(input('time : '))
+        b = c*2+1
         GPIO.output(Fan, GPIO.LOW)
         for count in range(1,b):
             distance = tof.get_distance()
             Rdistance = distance*0.6931 + 16.375
             temp = max(sensor.readPixels())
             if (distance > 0):
-                print ("%d mm, %d cm, %d 'c, %d" % (Rdistance, (distance/10), temp, count))
+                print ("%d mm, %d cm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.5))
             time.sleep(timing/200000.00)
         GPIO.output(Fan, GPIO.HIGH)
 
