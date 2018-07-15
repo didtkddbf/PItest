@@ -1,7 +1,7 @@
 import time
 import VL53L0X
 import RPi.GPIO as GPIO
-#from Adafruit_AMG88xx import Adafruit_AMG88xx
+from Adafruit_AMG88xx import Adafruit_AMG88xx
 from time import sleep
 
 GPIO.setmode(GPIO.BCM)
@@ -17,7 +17,7 @@ GPIO.setup(Fann,GPIO.OUT)
 
 # Create a VL53L0X object
 tof = VL53L0X.VL53L0X()
-#sensor = Adafruit_AMG88xx()
+sensor = Adafruit_AMG88xx()
 
 # Start ranging
 #wait for it to boot
@@ -31,10 +31,10 @@ print ("Timing %d ms" % (timing/1000))
 
 for count in range(1,1010):
     distance = tof.get_distance()
+    Rdistance = distance*0.6931 + 16.375
+    temp = max(sensor.readPixels())
     if (distance > 0):
-        print ("%d mm, %d cm, %d" % (distance, (distance/10), count))
-#    temp = max(sensor.readPixels())
-#    print("%d 'C" % temp)
-    time.sleep(timing/1000000.00)
+        print ("%d mm, %d cm, %d 'c, %d" % (Rdistance, (distance/10), temp, count))
+    time.sleep(timing/100000.00)
 
 tof.stop_ranging()
