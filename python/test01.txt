@@ -1,0 +1,1 @@
+Displacement mm Displacement cm Temperature 'c Time s166 mm, 21 cm, 29 'c, 0.500000 s167 mm, 21 cm, 29 'c, 1.000000 s164 mm, 21 cm, 28 'c, 1.500000 s166 mm, 21 cm, 28 'c, 2.000000 s165 mm, 21 cm, 28 'c, 2.500000 s165 mm, 21 cm, 28 'c, 3.000000 s

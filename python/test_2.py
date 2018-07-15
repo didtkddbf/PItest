@@ -33,36 +33,42 @@ if (timing < 20000):
     timing = 20000
 print ("Timing %d ms" % (timing/1000))
 
-tdata.write("Displacement mm Displacement cm Temperature 'c Time s")
+tdata.write("Cal_Disp, mm, Sen_Disp, mm, Temperature, 'c, Time, s \n")
 
 a = 0
 while a!=3:
     a= int(input('act=1,cool=2,stop=3 '))
     if a==1:
         c = int(input('time : '))
-        b = c*2+1
+        b = c*5+1
         GPIO.output(Act, GPIO.LOW)
+        tdata.write("Cal_Disp, mm, Temperature, 'c, Time, s \n")
         for count in range(1,b):
             distance = tof.get_distance()
             Rdistance = distance*0.6931 + 16.375
             temp = max(sensor.readPixels())
             if (distance > 0):
-                print("%d mm, %d cm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.5))
-                tdata.write("%d mm, %d cm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.5))
-            time.sleep(timing/200000.00)
+                print("%d mm, %d 'c, %f s" % (Rdistance, temp, count*0.2))
+                tdata.write("%d mm, %d 'c, %f s \n" % (Rdistance, temp, count*0.2))
+            time.sleep(timing/500000.00)
         GPIO.output(Act, GPIO.HIGH)
+        for count in range(b,b+51):
+            print("%d mm, %d 'c, %f s" % (Rdistance, temp, count*0.2))
+            tdata.write("%d mm, %d 'c, %f s \n" % (Rdistance, temp, count*0.2))
+            time.sleep(timing/500000.00)
     elif a==2:
         c = int(input('time : '))
-        b = c*2+1
+        b = c*5+1
         GPIO.output(Fan, GPIO.LOW)
+        tdata.write("Cal_Disp, mm, Sen_Disp, mm, Temperature, 'c, Time, s \n")
         for count in range(1,b):
             distance = tof.get_distance()
             Rdistance = distance*0.6931 + 16.375
             temp = max(sensor.readPixels())
             if (distance > 0):
-                print("%d mm, %d cm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.5))
-                tdata.write("%d mm, %d cm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.5))
-            time.sleep(timing/200000.00)
+                print("%d mm, %d 'c, %f s" % (Rdistance, (distance/10), temp, count*0.2))
+                tdata.write("%d mm, %d 'c, %f s \n" % (Rdistance, (distance/10), temp, count*0.2))
+            time.sleep(0.5)
         GPIO.output(Fan, GPIO.HIGH)
 
 tof.stop_ranging()
